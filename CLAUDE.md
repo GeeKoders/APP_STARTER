@@ -74,3 +74,4 @@ When adding new tools:
 ### Test Structure
 
 Tests use fixtures stored in `tests/fixtures/` (mcp_docs.docx, mcp_docs.pdf) to verify document conversion functionality. Each test module should include fixture existence verification.
+- Always apply appropriate types to function args
