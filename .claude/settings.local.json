@@ -3,6 +3,7 @@
     "allow": [
       "Bash(uv run pytest:*)",
       "Bash(python:*)",
+      "Bash(python3:*)",
       "Bash(uv run:*)"
     ],
     "defaultMode": "acceptEdits"
