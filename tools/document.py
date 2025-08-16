@@ -1,7 +1,10 @@
+import logging
 from markitdown import MarkItDown, StreamInfo
 from io import BytesIO
 from pydantic import Field
 import os
+
+logger = logging.getLogger(__name__)
 
 
 def binary_document_to_markdown(
@@ -31,11 +34,19 @@ def binary_document_to_markdown(
     
     This is the document content...
     """
-    md = MarkItDown()
-    file_obj = BytesIO(binary_data)
-    stream_info = StreamInfo(extension=file_type)
-    result = md.convert(file_obj, stream_info=stream_info)
-    return result.text_content
+    logger.info(f"Converting binary document of type: {file_type}, size: {len(binary_data)} bytes")
+    
+    try:
+        md = MarkItDown()
+        file_obj = BytesIO(binary_data)
+        stream_info = StreamInfo(extension=file_type)
+        result = md.convert(file_obj, stream_info=stream_info)
+        
+        logger.info(f"Successfully converted binary document to markdown, output length: {len(result.text_content)} characters")
+        return result.text_content
+    except Exception as e:
+        logger.error(f"Failed to convert binary document of type {file_type}: {e}")
+        raise
 
 
 def document_path_to_markdown(
@@ -69,28 +80,38 @@ def document_path_to_markdown(
     
     More content here...
     """
+    logger.info(f"Processing document conversion for file: {file_path}")
+    
     # Check if file exists
     if not os.path.exists(file_path):
+        logger.error(f"File not found: {file_path}")
         raise FileNotFoundError(f"File not found: {file_path}")
     
     # Get file extension to determine type
     _, ext = os.path.splitext(file_path)
     file_type = ext.lower().lstrip('.')
+    logger.debug(f"Detected file type: {file_type}")
     
     # Validate supported file types
     supported_types = {'pdf', 'docx'}
     if file_type not in supported_types:
+        logger.error(f"Unsupported file type: {file_type}. Supported types: {supported_types}")
         raise ValueError(f"Unsupported file type: {file_type}. Supported types: {supported_types}")
     
     # Read file as binary data
     try:
         with open(file_path, 'rb') as f:
             binary_data = f.read()
+        logger.debug(f"Successfully read file: {file_path}, size: {len(binary_data)} bytes")
     except Exception as e:
+        logger.error(f"Error reading file {file_path}: {str(e)}")
         raise Exception(f"Error reading file {file_path}: {str(e)}")
     
     # Convert using existing binary_document_to_markdown function
     try:
-        return binary_document_to_markdown(binary_data, file_type)
+        result = binary_document_to_markdown(binary_data, file_type)
+        logger.info(f"Successfully converted document: {file_path}")
+        return result
     except Exception as e:
+        logger.error(f"Error converting document {file_path}: {str(e)}")
         raise Exception(f"Error converting document {file_path}: {str(e)}")
