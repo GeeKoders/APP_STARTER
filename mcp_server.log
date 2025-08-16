@@ -1,0 +1,8 @@
+2025-08-16 16:53:27,538 - __main__ - INFO - Starting MCP server
+2025-08-16 16:53:27,542 - mcp.server.lowlevel.server - INFO - Processing request of type ListToolsRequest
+2025-08-16 16:53:27,542 - mcp.server.lowlevel.server - INFO - Processing request of type ListPromptsRequest
+2025-08-16 16:53:27,543 - mcp.server.lowlevel.server - INFO - Processing request of type ListResourcesRequest
+2025-08-16 16:57:35,709 - __main__ - INFO - Starting MCP server
+2025-08-16 16:57:35,714 - mcp.server.lowlevel.server - INFO - Processing request of type ListToolsRequest
+2025-08-16 16:57:35,714 - mcp.server.lowlevel.server - INFO - Processing request of type ListPromptsRequest
+2025-08-16 16:57:35,715 - mcp.server.lowlevel.server - INFO - Processing request of type ListResourcesRequest
